@@ -1,9 +1,15 @@
 import requests
 import os
-from dotenv import load_dotenv
+import streamlit as st
 
-load_dotenv()
-API_KEY = os.getenv("OPENWEATHER_API_KEY")
+try:
+    # Try loading from Streamlit Cloud secrets
+    API_KEY = st.secrets["OPENWEATHER_API_KEY"]
+except Exception:
+    # Fallback to local .env file
+    from dotenv import load_dotenv
+    load_dotenv()
+    API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
 def get_data(place, forecast_days):
     url = f"http://api.openweathermap.org/data/2.5/forecast?q={place}&appid={API_KEY}"
@@ -16,4 +22,4 @@ def get_data(place, forecast_days):
 
 
 if __name__ == "__main__":
-    print(get_data("tokyo", 2))
+    print(get_data("Bahawalpur", 2))
