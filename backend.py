@@ -1,7 +1,12 @@
 import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
 def get_data(place, forecast_days):
-    url = f"http://api.openweathermap.org/data/2.5/forecast?q={place}&appid=46a2b51744f041cedef8153f56aec70e"
+    url = f"http://api.openweathermap.org/data/2.5/forecast?q={place}&appid={API_KEY}"
     response = requests.get(url)
     data = response.json()
     filtered_data = data["list"]
